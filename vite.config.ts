@@ -11,6 +11,9 @@ export default defineConfig(({ mode }) => {
         server: {
             port: 8080,
         },
+        optimizeDeps: {
+            include: ["showdown", "@tak-ps/vue-tabler"],
+        },
         plugins: [
             vue(),
             VitePWA({

@@ -11,19 +11,19 @@ const router = VueRouter.createRouter({
     history: VueRouter.createWebHistory(),
     routes: [
         {
-            path: '/',
+            path: '/search/',
             name: 'home',
             component: () => import('./components/Home.vue'),
             children: [{
-                path: '/aircraft/regions',
+                path: '/search/aircraft/regions',
                 name: 'aircraft-regions',
                 component: () => import('./components/AircraftRegions.vue'),
             },{
-                path: '/aircraft/calc',
+                path: '/search/aircraft/calc',
                 name: 'aircraft-calc',
                 component: () => import('./components/AircraftCalc.vue'),
             },{
-                path: '/ground',
+                path: '/search/ground',
                 name: 'ground',
                 component: () => import('./components/Ground.vue'),
             }]
