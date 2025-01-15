@@ -4,21 +4,16 @@
             <h1 class='card-title'>
                 Aircraft Search Regions
             </h1>
+            <div class='btn-list ms-auto'>
+                <TablerIconButton
+                    title='New Region'
+                    @click='pushRegion'
+                >
+                    <IconPlus :size='32' stroke='1'/>
+                </TablerIconButton>
+            </div>
         </div>
         <div class='card-body'>
-            <div class='col-12 d-flex align-items-center mb-1'>
-                Regions
-
-                <div class='btn-list ms-auto'>
-                    <TablerIconButton
-                        title='New Region'
-                        @click='pushRegion'
-                    >
-                        <IconPlus :size='32' stroke='1'/>
-                    </TablerIconButton>
-                </div>
-            </div>
-
             <TablerNone
                 v-if='search.aircraft.regions.length === 0'
                 label='Region'
@@ -78,7 +73,7 @@
         <div class='card-footer d-flex'>
             <div class='ms-auto'>
                 <button
-                    :disabled='isValid'
+                    :disabled='!isValid'
                     class='btn btn-primary'
                     @click='router.push("/aircraft")'
                 >Next</button>
@@ -103,7 +98,18 @@ import {
 const search = useSearchStore();
 
 const isValid = computed(() => {
-    return !search.aircraft.regions.length
+    if (!search.aircraft.regions.length) return false;
+
+    for (const region of search.aircraft.regions) {
+        if (
+            !region.name.length
+            || isNaN(region.flightLength)
+            || isNaN(region.searchLength)
+            || isNaN(region.sweepWidth)
+        ) return false;
+    }
+
+    return true;
 });
 
 function pushRegion() {

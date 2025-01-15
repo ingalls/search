@@ -15,17 +15,17 @@ const router = VueRouter.createRouter({
             name: 'home',
             component: () => import('./components/Home.vue'),
             children: [{
-                name: 'home-default',
-                path: '/',
-                redirect: '/aircraft'
-            },{
-                path: '/aircraft',
-                name: 'aircraft',
-                component: () => import('./components/Aircraft.vue'),
+                path: '/aircraft/regions',
+                name: 'aircraft-regions',
+                component: () => import('./components/AircraftRegions.vue'),
             },{
                 path: '/ground',
                 name: 'ground',
                 component: () => import('./components/Ground.vue'),
+            },{
+                path: '/aircraft',
+                name: 'aircraft',
+                component: () => import('./components/Aircraft.vue'),
             }]
         },
 
