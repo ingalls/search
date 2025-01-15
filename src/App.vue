@@ -11,11 +11,10 @@
     </div>
 </template>
 
-<script lang='ts'>
-import { watch, ref } from 'vue'
+<script setup lang='ts'>
+import { onMounted, ref } from 'vue'
 import '@tabler/core/dist/js/tabler.min.js';
 import '@tabler/core/dist/css/tabler.min.css';
-import { useProfileStore } from './stores/profile.ts';
 import {
     TablerError,
     TablerLoading
