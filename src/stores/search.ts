@@ -6,6 +6,7 @@ export const useSearchStore = defineStore('search', {
         description: string;
         aircraft: {
             regions: Array<{
+                name: string;
                 flightLength: number;
                 searchLength: number;
                 sweepWidth: number;

@@ -3,7 +3,7 @@
         <div class='card'>
             <div class='card-header d-flex'>
                 <h1 class='card-title'>
-                    Aircraft Search
+                    Aircraft Search Regions
                 </h1>
             </div>
             <div class='card-body'>
@@ -33,13 +33,21 @@
                         <div class='col-12 border rounded px-2 py-2 mb-2'>
                             <div class='row g-2'>
                                 <div class='col-12 d-flex align-items-center'>
-                                    <label v-text='`Region ${indexToChar(rid)}`'/>
+                                    <label v-text='`Region ${indexToChar(rid)} - ${region.name || "No Name"}`'/>
                                     <div class='btn-list ms-auto'>
                                         <TablerDelete
                                             displaytype='icon'
                                             @delete='search.aircraft.regions.splice(rid, 1)'
                                         />
                                     </div>
+                                </div>
+                                <div class='col-md-12'>
+                                    <TablerInput
+                                        label='Region Name'
+                                        description='The full non-coded name of a given region'
+                                        placeholder='Gondor'
+                                        v-model='region.name'
+                                    />
                                 </div>
                                 <div class='col-md-4'>
                                     <TablerInput
@@ -68,12 +76,34 @@
                     </div>
                 </template>
             </div>
+            <div v-if='!missionEditor' class='card-footer d-flex'>
+                <div class='ms-auto'>
+                    <button
+                        class='btn btn-primary'
+                        @click='missionEditor = true'
+                    >Next</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div v-if='missionEditor' class='col-lg-12'>
+        <div class='card'>
+            <div class='card-header d-flex'>
+                <h1 class='card-title'>
+                    Mission Editor
+                </h1>
+            </div>
+            <div class='card-body'>
+                <div class='col-12 d-flex align-items-center mb-1'>
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup lang='ts'>
-import { watch } from 'vue';
+import { watch, ref } from 'vue';
 import { useSearchStore } from '../stores/search.ts';
 import {
     IconPlus
@@ -85,10 +115,13 @@ import {
     TablerInput
 } from '@tak-ps/vue-tabler'
 
+const missionEditor = ref(false);
+
 const search = useSearchStore();
 
 function pushRegion() {
     search.aircraft.regions.push({
+        name: '',
         flightLength: 0,
         searchLength: 0,
         sweepWidth: 0
