@@ -14,7 +14,7 @@
                 <div class='empty-action'>
                     <a
                         class='cursor-pointer btn btn-primary'
-                        @click='$router.push(&apos;/&apos;)'
+                        @click='$router.push("/")'
                     >
                         Home
                     </a>

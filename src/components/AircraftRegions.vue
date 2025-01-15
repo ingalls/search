@@ -125,7 +125,7 @@ function pushRegion() {
 
 function clickNext() {
     search.aircraft.enabled["calc"] = true;
-    router.push('/aircraft/calc');
+    router.push('/search/aircraft/calc');
 }
 
 function indexToChar(index: number): string {

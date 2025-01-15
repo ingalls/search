@@ -80,7 +80,7 @@
                 <button
                     :disabled='isValid'
                     class='btn btn-primary'
-                    @click='router.push("/aircraft")'
+                    @click='router.push("/search/aircraft")'
                 >Next</button>
             </div>
         </div>

@@ -30,7 +30,7 @@
                                                 "active": String(route.name) === "home",
                                                 "cursor-pointer": String(route.name) !== "home"
                                             }'
-                                            @click='$router.push(`/`)'
+                                            @click='$router.push(`/search`)'
                                         >
                                             <IconHome
                                                 :size='32'
@@ -47,7 +47,7 @@
                                                     "active": String(route.name) === "aircraft-regions",
                                                     "cursor-pointer": String(route.name) !== "aircraft-regions"
                                                 }'
-                                                @click='$router.push(`/aircraft/regions`)'
+                                                @click='$router.push(`/search/aircraft/regions`)'
                                             >
                                                 <IconMap
                                                     :size='32'
@@ -63,7 +63,7 @@
                                                     "active": String(route.name) === "aircraft-calc",
                                                     "cursor-pointer": String(route.name) !== "aircraft-calc"
                                                 }'
-                                                @click='$router.push(`/aircraft/calc`)'
+                                                @click='$router.push(`/search/aircraft/calc`)'
                                             >
                                                 <IconCalculator
                                                     :size='32'
@@ -198,7 +198,7 @@ function clickNext() {
     search.aircraft.enabled["regions"] = true;
 
     if (search.type === "aircraft") {
-        router.push("/aircraft/regions")
+        router.push("/search/aircraft/regions")
     }
 }
 </script>
