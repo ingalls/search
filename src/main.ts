@@ -14,6 +14,19 @@ const router = VueRouter.createRouter({
             path: '/',
             name: 'home',
             component: () => import('./components/Home.vue'),
+            children: [{
+                name: 'home-default',
+                path: '/',
+                redirect: '/aircraft'
+            },{
+                path: '/aircraft',
+                name: 'aircraft',
+                component: () => import('./components/Aircraft.vue'),
+            },{
+                path: '/ground',
+                name: 'ground',
+                component: () => import('./components/Ground.vue'),
+            }]
         },
 
         { path: '/:catchAll(.*)', name: 'lost', component: () => import('./components/Lost.vue') },

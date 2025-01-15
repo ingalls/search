@@ -1,22 +1,22 @@
 import { defineStore } from 'pinia';
 
-export enum MissionType {
-    AIRCRAFT = 'aircraft',
-    GROUND = 'ground'
-};
-
 export const useSearchStore = defineStore('search', {
     state: (): {
-        type: MissionType;
         name: string;
         description: string;
+        aircraft: {
+            regions: Array<{
+                flightLength: number;
+                searchLength: number;
+                sweepWidth: number;
+            }>
+        }
     } => {
         return {
-            type: MissionType.AIRCRAFT,
             name: '',
             description: '',
             aircraft: {
-
+                regions: []
             },
             ground: {
 

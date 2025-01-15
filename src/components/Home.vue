@@ -5,9 +5,11 @@
                 <div class='col-lg-12'>
                     <div class='card'>
                         <div class='card-header d-flex'>
-                            <h1 class='card-title'>Search Mission</h1>
+                            <h1 class='card-title'>
+                                Search Probability of Success Calculator
+                            </h1>
 
-                            <div class='ms-auto'>
+                            <div class='btn-list ms-auto'>
                                 <div
                                     class='px-2 py-2 round btn-group w-100'
                                     role='group'
@@ -17,11 +19,11 @@
                                         type='radio'
                                         class='btn-check'
                                         autocomplete='off'
-                                        :checked='search.type === MissionType.AIRCRAFT'
-                                        @click='search.type = MissionType.AIRCRAFT'
+                                        :checked='route.name === "aircraft"'
+                                        @click='router.push("/aircraft")'
                                     >
                                     <label
-                                        for='info'
+                                        for='plane'
                                         type='button'
                                         class='btn btn-sm'
                                     ><IconPlane
@@ -30,17 +32,16 @@
                                         stroke='1'
                                     /></label>
 
-
                                     <input
                                         id='ground'
                                         type='radio'
                                         class='btn-check'
                                         autocomplete='off'
-                                        :checked='search.type === MissionType.GROUND'
-                                        @click='search.type = MissionType.GROUND'
+                                        :checked='route.name === "ground"'
+                                        @click='router.push("/ground")'
                                     >
                                     <label
-                                        for='info'
+                                        for='ground'
                                         type='button'
                                         class='btn btn-sm'
                                     ><IconWalk
@@ -53,25 +54,28 @@
                         </div>
                         <div class='card-body'>
                             <TablerInput
-                                label='Search Name'
                                 v-model='search.name'
+                                label='Search Name'
                             />
 
                             <TablerInput
-                                label='Search Description'
                                 v-model='search.description'
-                                rows='2'
+                                label='Search Description'
+                                :rows='2'
                             />
                         </div>
                     </div>
                 </div>
+
+                <router-view />
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang='ts'>
-import { useSearchStore, MissionType } from '../stores/search.ts';
+import { useRouter, useRoute } from 'vue-router';
+import { useSearchStore } from '../stores/search.ts';
 import {
     IconWalk,
     IconPlane
@@ -80,5 +84,7 @@ import {
     TablerInput
 } from '@tak-ps/vue-tabler'
 
+const route = useRoute();
+const router = useRouter();
 const search = useSearchStore();
 </script>

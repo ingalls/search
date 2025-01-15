@@ -17,15 +17,13 @@ import '@tabler/core/dist/js/tabler.min.js';
 import '@tabler/core/dist/css/tabler.min.css';
 import {
     TablerError,
-    TablerLoading
 } from '@tak-ps/vue-tabler';
-import { std, stdurl } from './std.ts';
 
 const err = ref<Error | undefined>();
 
 onMounted(async () => {
     window.addEventListener('unhandledrejection', (e) => {
-        this.err = e.reason;
+        err.value = e.reason;
     });
 });
 </script>
