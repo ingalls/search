@@ -34,7 +34,7 @@
                                         </span>
                                         <template v-if='isValid && search.type === "aircraft"'>
                                             <span
-                                                v-if='search.aircraft.enabled.has("regions")'
+                                                v-if='search.aircraft.enabled["regions"]'
                                                 tabindex='0'
                                                 role='menuitem'
                                                 class='list-group-item list-group-item-action d-flex align-items-center user-select-none'
@@ -50,7 +50,7 @@
                                                 /><span class='mx-3'>Regions</span>
                                             </span>
                                             <span
-                                                v-if='search.aircraft.enabled.has("calc")'
+                                                v-if='search.aircraft.enabled["calc"]'
                                                 tabindex='0'
                                                 role='menuitem'
                                                 class='list-group-item list-group-item-action d-flex align-items-center user-select-none'
@@ -190,7 +190,7 @@ const router = useRouter();
 const search = useSearchStore();
 
 function clickNext() {
-    search.aircraft.enabled.add("regions")
+    search.aircraft.enabled["regions"] = true;
 
     if (search.type === "aircraft") {
         router.push("/aircraft/regions")

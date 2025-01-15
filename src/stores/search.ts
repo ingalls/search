@@ -7,7 +7,7 @@ export const useSearchStore = defineStore('search', {
         startDate: string;
         description: string;
         aircraft: {
-            enabled: Set<string>,
+            enabled: Recrod<string, boolean>,
             regions: Array<{
                 name: string;
                 flightLength: number;
@@ -23,7 +23,7 @@ export const useSearchStore = defineStore('search', {
             startDate: '',
             description: '',
             aircraft: {
-                enabled: new Set(),
+                enabled: {},
                 regions: []
             },
             ground: {
