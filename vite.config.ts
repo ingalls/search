@@ -6,9 +6,6 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), '');
 
     const res = {
-        define: {
-            'process.env.API_URL': env.API_URL
-        },
         plugins: [
             vue(),
             VitePWA({
@@ -35,18 +32,6 @@ export default defineConfig(({ mode }) => {
         server: {
             port: 8080,
         },
-    }
-
-    if (process.env.VITE_MODE !== 's3') {
-        res.build = {
-            rollupOptions: {
-                output: {
-                    entryFileNames: `assets/[name].js`,
-                    chunkFileNames: `assets/[name].js`,
-                    assetFileNames: `assets/[name].[ext]`
-                }
-            }
-        }
     }
 
     return res;
