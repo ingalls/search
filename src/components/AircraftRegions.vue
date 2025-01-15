@@ -63,10 +63,21 @@
                                     label='Sweep Width (nm)'
                                     description='TODO'
                                     v-model='region.sweepWidth'
-                                />
+                                >
+                                    <TablerIconButton
+                                        title='Sweep Width Calculator'
+                                        @click='state.modal = true'
+                                    >
+                                        <IconCalculator stroke='1'/>
+                                    </TablerIconButton>
+                                </TablerInput>
                             </div>
                         </div>
                     </div>
+                    <SweepCalculator
+                        v-if='state.modal'
+                        @close='state.modal = false'
+                    />
                 </div>
             </template>
         </div>
@@ -86,8 +97,10 @@
 import { watch, ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useSearchStore } from '../stores/search.ts';
+import SweepCalculator from './AircraftRegionsSweepWidth.vue';
 import {
-    IconPlus
+    IconPlus,
+    IconCalculator
 } from '@tabler/icons-vue'
 import {
     TablerIconButton,
@@ -98,6 +111,10 @@ import {
 
 const search = useSearchStore();
 const router = useRouter();
+
+const state = ref({
+    modal: false
+})
 
 const isValid = computed(() => {
     if (!search.aircraft.regions.length) return false;
