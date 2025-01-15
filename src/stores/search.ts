@@ -13,6 +13,8 @@ export const useSearchStore = defineStore('search', {
                 flightLength: number;
                 searchLength: number;
                 sweepWidth: number;
+                segments: number;
+                tracks: number;
             }>
         }
     } => {

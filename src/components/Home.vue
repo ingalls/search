@@ -10,9 +10,14 @@
                         <div class='row g-0' >
                             <div class='col-12 col-md-3 border-end'>
                                 <div class='card-body'>
-                                    <h4 class='subheader user-select-none'>
-                                        Search PoS
-                                    </h4>
+                                    <div class='col-12 d-flex align-items-center'>
+                                        <h4 class='subheader user-select-none'>
+                                            Search PoS
+                                        </h4>
+
+                                        <div class='btn-list ms-auto'>
+                                        </div>
+                                    </div>
                                     <div
                                         role='menu'
                                         class='list-group list-group-transparent'

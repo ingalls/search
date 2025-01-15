@@ -5,72 +5,133 @@
                 Aircraft Calculator
             </h1>
         </div>
-        <div class='card-body'>
-            <TablerNone
-                v-if='search.aircraft.regions.length === 0'
-                label='Region'
-                @create='pushRegion'
-            />
-            <template v-else>
-                <div
-                    :key='region.id'
-                    v-for='(region, rid) in search.aircraft.regions'
-                >
-                    <div class='col-12 border rounded px-2 py-2 mb-2'>
-                        <div class='row g-2'>
-                            <div class='col-12 d-flex align-items-center'>
-                                <label v-text='`Region ${indexToChar(rid)} - ${region.name || "No Name"}`'/>
-                                <div class='btn-list ms-auto'>
-                                    <TablerDelete
-                                        displaytype='icon'
-                                        @delete='search.aircraft.regions.splice(rid, 1)'
-                                    />
-                                </div>
-                            </div>
-                            <div class='col-md-12'>
+        <TablerNone
+            v-if='search.aircraft.regions.length === 0'
+            label='Region'
+        />
+        <template v-else>
+            <div class='table-responsive'>
+                <table class="table table-vcenter card-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Flight Length (nm)</th>
+                            <th scope="col">Search Length (nm)</th>
+                            <th scope="col">Sweep Width (nm)</th>
+                            <th scope="col">Tracks</th>
+                            <th scope="col">Segments</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr v-for='(region, rid) in search.aircraft.regions'>
+                            <th v-text='`${rid} - ${region.name}`'/>
+                            <td v-text='region.flightLength'/>
+                            <td v-text='region.searchLength'/>
+                            <td v-text='region.sweepWidth'/>
+                            <td>
                                 <TablerInput
-                                    label='Region Name'
-                                    description='The full non-coded name of a given region'
-                                    placeholder='Gondor'
-                                    v-model='region.name'
+                                    v-model='region.tracks'
                                 />
-                            </div>
-                            <div class='col-md-4'>
+                            </td>
+                            <td>
                                 <TablerInput
-                                    label='Flight Length (nm)'
-                                    description='The length of the flight from Last Known Point (LKP) to destination in nautical miles'
-                                    @update:modelValue='region.searchLength = $event + 20'
-                                    v-model='region.flightLength'
+                                    v-model='region.segments'
                                 />
-                            </div>
-                            <div class='col-md-4'>
-                                <TablerInput
-                                    label='Search Length (nm)'
-                                    description='The length of the flight from Last Known Point (LKP) to destination + search before LKP and after destination - defaults to +/- 10nm on each side'
-                                    v-model='region.searchLength'
-                                />
-                            </div>
-                            <div class='col-md-4'>
-                                <TablerInput
-                                    label='Sweep Width (nm)'
-                                    description='TODO'
-                                    v-model='region.sweepWidth'
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </template>
-        </div>
-        <div class='card-footer d-flex'>
-            <div class='ms-auto'>
-                <button
-                    :disabled='!isValid'
-                    class='btn btn-primary'
-                    @click='router.push("/aircraft")'
-                >Next</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
-        </div>
+        </template>
+
+        <template v-if='true'>
+            <div class='table-responsive'>
+                <table class="table table-vcenter card-table">
+                    <tbody>
+                        <tr>
+                            <td>Fuel Limited Time</td>
+                            <td>
+                                <TablerInput
+
+                                />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Daylight Limited Time</td>
+                            <td>
+                                <TablerInput
+
+                                />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Observer Endurance</td>
+                            <td>
+                                <TablerInput
+
+                                />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Search Endurance</td>
+                            <td>
+                                <TablerInput
+
+                                />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Search Speed</td>
+                            <td>
+                                <TablerInput
+
+                                />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>SRU Mileage</td>
+                            <td>
+                                <TablerInput
+
+                                />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Track Portion</td>
+                            <td>
+                                <TablerInput
+
+                                />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Search Length</td>
+                            <td>
+                                <TablerInput
+
+                                />
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>Number Tracks</td>
+                            <td>
+                                <TablerInput
+
+                                />
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </template>
     </div>
 </template>
 
