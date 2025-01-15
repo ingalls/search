@@ -6,6 +6,11 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), '');
 
     const res = {
+        base: '/search',
+        build: {},
+        server: {
+            port: 8080,
+        },
         plugins: [
             vue(),
             VitePWA({
@@ -25,13 +30,6 @@ export default defineConfig(({ mode }) => {
                 }
             })
         ],
-        optimizeDeps: {
-            include: ["showdown", "@tak-ps/vue-tabler"],
-        },
-        build: {},
-        server: {
-            port: 8080,
-        },
     }
 
     return res;
