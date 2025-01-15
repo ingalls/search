@@ -75,7 +75,7 @@
                 <button
                     :disabled='!isValid'
                     class='btn btn-primary'
-                    @click='router.push("/aircraft/calc")'
+                    @click='router.push("/aircraft")'
                 >Next</button>
             </div>
         </div>

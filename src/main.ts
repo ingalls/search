@@ -1,4 +1,4 @@
-import { createApp } from 'vue'
+import { createApp, watch } from 'vue'
 import * as VueRouter from 'vue-router'
 import { createPinia } from 'pinia'
 
@@ -19,13 +19,13 @@ const router = VueRouter.createRouter({
                 name: 'aircraft-regions',
                 component: () => import('./components/AircraftRegions.vue'),
             },{
+                path: '/aircraft/calc',
+                name: 'aircraft-calc',
+                component: () => import('./components/AircraftCalc.vue'),
+            },{
                 path: '/ground',
                 name: 'ground',
                 component: () => import('./components/Ground.vue'),
-            },{
-                path: '/aircraft',
-                name: 'aircraft',
-                component: () => import('./components/Aircraft.vue'),
             }]
         },
 
@@ -35,6 +35,19 @@ const router = VueRouter.createRouter({
 
 const app = createApp(App);
 const pinia = createPinia()
+
+
+watch(
+    pinia.state,
+    (state) => {
+        localStorage.setItem(
+            "mission",
+            JSON.stringify(state.search)
+        );
+    },
+    { deep: true }
+);
+
 app.use(router);
 app.use(pinia);
 app.use(FloatingVue);

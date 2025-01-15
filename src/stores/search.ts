@@ -7,6 +7,7 @@ export const useSearchStore = defineStore('search', {
         startDate: string;
         description: string;
         aircraft: {
+            enabled: Set<string>,
             regions: Array<{
                 name: string;
                 flightLength: number;
@@ -15,18 +16,25 @@ export const useSearchStore = defineStore('search', {
             }>
         }
     } => {
-        return {
+        const initial =  {
             name: '',
             code: '',
             type: 'aircraft',
             startDate: '',
             description: '',
             aircraft: {
+                enabled: new Set(),
                 regions: []
             },
             ground: {
 
             }
         }
-    },
+
+        if (localStorage.getItem("mission")) {
+            Object.assign(initial, JSON.parse(localStorage.getItem("mission")))
+        }
+
+        return initial;
+    }
 })

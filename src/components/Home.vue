@@ -32,8 +32,9 @@
                                                 stroke='1'
                                             /><span class='mx-3'>Setup</span>
                                         </span>
-                                        <template v-if='isValid && initial.next'>
+                                        <template v-if='isValid && search.type === "aircraft"'>
                                             <span
+                                                v-if='search.aircraft.enabled.has("regions")'
                                                 tabindex='0'
                                                 role='menuitem'
                                                 class='list-group-item list-group-item-action d-flex align-items-center user-select-none'
@@ -47,6 +48,22 @@
                                                     :size='32'
                                                     stroke='1'
                                                 /><span class='mx-3'>Regions</span>
+                                            </span>
+                                            <span
+                                                v-if='search.aircraft.enabled.has("calc")'
+                                                tabindex='0'
+                                                role='menuitem'
+                                                class='list-group-item list-group-item-action d-flex align-items-center user-select-none'
+                                                :class='{
+                                                    "active": String(route.name) === "aircraft-calc",
+                                                    "cursor-pointer": String(route.name) !== "aircraft-calc"
+                                                }'
+                                                @click='$router.push(`/aircraft/calc`)'
+                                            >
+                                                <IconCalculator
+                                                    :size='32'
+                                                    stroke='1'
+                                                /><span class='mx-3'>Calculator</span>
                                             </span>
                                         </template>
                                     </div>
@@ -145,10 +162,11 @@
 </template>
 
 <script setup lang='ts'>
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { useSearchStore } from '../stores/search.ts';
 import {
+    IconCalculator,
     IconMapSearch,
     IconWalk,
     IconHome,
@@ -158,10 +176,6 @@ import {
 import {
     TablerInput
 } from '@tak-ps/vue-tabler'
-
-const initial = ref({
-    next: false
-});
 
 const isValid = computed(() => {
     return search.name.length
@@ -176,7 +190,7 @@ const router = useRouter();
 const search = useSearchStore();
 
 function clickNext() {
-    initial.value.next = true
+    search.aircraft.enabled.add("regions")
 
     if (search.type === "aircraft") {
         router.push("/aircraft/regions")
