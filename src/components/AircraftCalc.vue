@@ -2,16 +2,8 @@
     <div>
         <div class='card-header d-flex'>
             <h1 class='card-title'>
-                Aircraft Search Regions
+                Aircraft Calculator
             </h1>
-            <div class='btn-list ms-auto'>
-                <TablerIconButton
-                    title='New Region'
-                    @click='pushRegion'
-                >
-                    <IconPlus :size='32' stroke='1'/>
-                </TablerIconButton>
-            </div>
         </div>
         <div class='card-body'>
             <TablerNone

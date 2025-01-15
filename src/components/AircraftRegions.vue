@@ -75,7 +75,7 @@
                 <button
                     :disabled='!isValid'
                     class='btn btn-primary'
-                    @click='router.push("/aircraft/calc")'
+                    @click='clickNext'
                 >Next</button>
             </div>
         </div>
@@ -84,6 +84,7 @@
 
 <script setup lang='ts'>
 import { watch, ref, computed } from 'vue';
+import { useRouter } from 'vue-router';
 import { useSearchStore } from '../stores/search.ts';
 import {
     IconPlus
@@ -96,6 +97,7 @@ import {
 } from '@tak-ps/vue-tabler'
 
 const search = useSearchStore();
+const router = useRouter();
 
 const isValid = computed(() => {
     if (!search.aircraft.regions.length) return false;
@@ -119,6 +121,11 @@ function pushRegion() {
         searchLength: 0,
         sweepWidth: 0
     })
+}
+
+function clickNext() {
+    search.aircraft.enabled["calc"] = true;
+    router.push('/aircraft/calc');
 }
 
 function indexToChar(index: number): string {
