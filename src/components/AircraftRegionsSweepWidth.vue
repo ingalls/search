@@ -80,7 +80,7 @@ const emit = defineEmits(["close", 'select'])
 
 const calc = computed(() => {
     const cor = corrections.indexOf(userSelection.value.vegetation);
-    const hgt = heights.value.fn().indexOf(userSelection.value.height);
+    const hgt = heights.fn().indexOf(userSelection.value.height);
     const viz = visibilities.indexOf(userSelection.value.visibility);
 
     return dataTable[userSelection.value.object].widths[hgt][viz]

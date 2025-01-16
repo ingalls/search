@@ -6,9 +6,9 @@
             </h1>
 
             <div v-if='search.aircraft.searches.length' class='ms-auto btn-list'>
-                <TablerEnum
-                    :default='searches[0]'
-                    :options='searches'
+                <TablerDelete
+                    displaytype='icon'
+                    @delete='deleteSearch'
                 />
                 <TablerIconButton
                     title='Add Search'
@@ -16,6 +16,11 @@
                 >
                     <IconPlus :size='32' stroke='1'/>
                 </TablerIconButton>
+                <TablerEnum
+                    @update:modelValue='config.search = parseInt($event.match(/\d+/))'
+                    :default='config.search'
+                    :options='searches'
+                />
             </div>
         </div>
 
@@ -109,11 +114,17 @@ const isValid = computed(() => {
     return true;
 });
 
+function deleteSearch() {
+
+}
+
 function pushSearch() {
     search.aircraft.searches.push({
         tracks: 1,
         segments: 0,
     })
+
+    config.search = search.aircraft.searches.length - 1;
 }
 
 function indexToChar(index: number): string {
