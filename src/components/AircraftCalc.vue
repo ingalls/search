@@ -1,142 +1,71 @@
 <template>
     <div>
-        <div class='card-header d-flex'>
+        <div class='card-header d-flex align-items-center'>
             <h1 class='card-title'>
-                Aircraft Calculator
+                Aircraft Search Calculator
             </h1>
+
+            <div v-if='search.aircraft.searches.length' class='ms-auto btn-list'>
+                <TablerEnum
+                    :default='searches[0]'
+                    :options='searches'
+                />
+                <TablerIconButton
+                    title='Add Search'
+                    @click='pushSearch'
+                >
+                    <IconPlus :size='32' stroke='1'/>
+                </TablerIconButton>
+            </div>
         </div>
-        <TablerNone
-            v-if='search.aircraft.regions.length === 0'
-            label='Region'
-        />
-        <template v-else>
-            <div class='table-responsive'>
-                <table class="table table-vcenter card-table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Flight Length (nm)</th>
-                            <th scope="col">Search Length (nm)</th>
-                            <th scope="col">Sweep Width (nm)</th>
-                            <th scope="col">Tracks</th>
-                            <th scope="col">Segments</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr v-for='(region, rid) in search.aircraft.regions'>
-                            <th v-text='`${rid} - ${region.name}`'/>
-                            <td v-text='region.flightLength'/>
-                            <td v-text='region.searchLength'/>
-                            <td v-text='region.sweepWidth'/>
-                            <td>
-                                <TablerInput
-                                    v-model='region.tracks'
-                                />
-                            </td>
-                            <td>
-                                <TablerInput
-                                    v-model='region.segments'
-                                />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </template>
 
-        <template v-if='true'>
-            <div class='table-responsive'>
-                <table class="table table-vcenter card-table">
-                    <tbody>
-                        <tr>
-                            <td>Fuel Limited Time</td>
-                            <td>
-                                <TablerInput
-
-                                />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Daylight Limited Time</td>
-                            <td>
-                                <TablerInput
-
-                                />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Observer Endurance</td>
-                            <td>
-                                <TablerInput
-
-                                />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Search Endurance</td>
-                            <td>
-                                <TablerInput
-
-                                />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Search Speed</td>
-                            <td>
-                                <TablerInput
-
-                                />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>SRU Mileage</td>
-                            <td>
-                                <TablerInput
-
-                                />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Track Portion</td>
-                            <td>
-                                <TablerInput
-
-                                />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Search Length</td>
-                            <td>
-                                <TablerInput
-
-                                />
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>Number Tracks</td>
-                            <td>
-                                <TablerInput
-
-                                />
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </template>
+        <div class='card-body'>
+            <TablerNone
+                v-if='search.aircraft.searches.length === 0'
+                label='Search'
+                @create='pushSearch'
+            />
+            <template v-else>
+                <div
+                    class='row g-2 mb-3'
+                    v-for='(region, rid) in search.aircraft.regions'
+                >
+                    <div class='col-md-3'>
+                        <div class='subheader'>Region</div>
+                        <div v-text='`${indexToChar(rid)} - ${region.name}`'></div>
+                    </div>
+                    <div class='col-md-3'>
+                        <div class='subheader'>Flight Length (nm)</div>
+                        <div v-text='region.flightLength'></div>
+                    </div>
+                    <div class='col-md-3'>
+                        <div class='subheader'>Search Length (nm)</div>
+                        <div v-text='region.searchLength'></div>
+                    </div>
+                    <div class='col-md-3'>
+                        <div class='subheader'>Sweep Width (nm)</div>
+                        <div v-text='region.sweepWidth'></div>
+                    </div>
+                    <div class='col-md-6'>
+                        <label class='subheader'>Search Tracks</label>
+                        <TablerInput
+                            v-model='search.aircraft.searches[config.search].tracks'
+                        />
+                    </div>
+                    <div class='col-md-6'>
+                        <label class='subheader'>Search Segments</label>
+                        <TablerInput
+                            v-model='search.aircraft.searches[config.search].segments'
+                        />
+                    </div>
+                </div>
+            </template>
+        </div>
     </div>
 </template>
 
 <script setup lang='ts'>
-import { watch, ref, computed } from 'vue';
+import { watch, ref, computed, onMounted } from 'vue';
 import { useSearchStore } from '../stores/search.ts';
 import {
     IconPlus
@@ -144,11 +73,26 @@ import {
 import {
     TablerIconButton,
     TablerDelete,
+    TablerEnum,
     TablerNone,
     TablerInput
 } from '@tak-ps/vue-tabler'
 
 const search = useSearchStore();
+
+const config = ref({
+    search: search.aircraft.searches.length - 1
+})
+
+onMounted(() => {
+    if (search.aircraft.searches.length === 0) {
+        pushSearch();
+    }
+});
+
+const searches = computed(() => {
+    return search.aircraft.searches.map((_, i) => `Search ${i}`);
+});
 
 const isValid = computed(() => {
     if (!search.aircraft.regions.length) return false;
@@ -165,12 +109,10 @@ const isValid = computed(() => {
     return true;
 });
 
-function pushRegion() {
-    search.aircraft.regions.push({
-        name: '',
-        flightLength: 0,
-        searchLength: 0,
-        sweepWidth: 0
+function pushSearch() {
+    search.aircraft.searches.push({
+        tracks: 1,
+        segments: 0,
     })
 }
 

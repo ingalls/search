@@ -14,7 +14,10 @@
                         title='New Region'
                         @click='pushRegion'
                     >
-                        <IconPlus :size='32' stroke='1'/>
+                        <IconPlus
+                            :size='32'
+                            stroke='1'
+                        />
                     </TablerIconButton>
                 </div>
             </div>
@@ -26,13 +29,13 @@
             />
             <template v-else>
                 <div
-                    :key='region.id'
                     v-for='(region, rid) in search.aircraft.regions'
+                    :key='region.id'
                 >
                     <div class='col-12 border rounded px-2 py-2 mb-2'>
                         <div class='row g-2'>
                             <div class='col-12 d-flex align-items-center'>
-                                <label v-text='`Region ${indexToChar(rid)} - ${region.name || "No Name"}`'/>
+                                <label v-text='`Region ${indexToChar(rid)} - ${region.name || "No Name"}`' />
                                 <div class='btn-list ms-auto'>
                                     <TablerDelete
                                         displaytype='icon'
@@ -42,32 +45,32 @@
                             </div>
                             <div class='col-md-12'>
                                 <TablerInput
+                                    v-model='region.name'
                                     label='Region Name'
                                     description='The full non-coded name of a given region'
                                     placeholder='Gondor'
-                                    v-model='region.name'
                                 />
                             </div>
                             <div class='col-md-4'>
                                 <TablerInput
+                                    v-model='region.flightLength'
                                     label='Flight Length (nm)'
                                     description='The length of the flight from Last Known Point (LKP) to destination in nautical miles'
-                                    @update:modelValue='region.searchLength = $event + 20'
-                                    v-model='region.flightLength'
+                                    @update:model-value='region.searchLength = $event + 20'
                                 />
                             </div>
                             <div class='col-md-4'>
                                 <TablerInput
+                                    v-model='region.searchLength'
                                     label='Search Length (nm)'
                                     description='The length of the flight from Last Known Point (LKP) to destination + search before LKP and after destination - defaults to +/- 10nm on each side'
-                                    v-model='region.searchLength'
                                 />
                             </div>
                             <div class='col-md-4'>
                                 <TablerInput
+                                    v-model='region.sweepWidth'
                                     label='Sweep Width (nm)'
                                     description='TODO'
-                                    v-model='region.sweepWidth'
                                 />
                             </div>
                         </div>
@@ -81,14 +84,16 @@
                     :disabled='isValid'
                     class='btn btn-primary'
                     @click='router.push("/search/aircraft")'
-                >Next</button>
+                >
+                    Next
+                </button>
             </div>
         </div>
     </div>
 </template>
 
 <script setup lang='ts'>
-import { watch, ref, computed } from 'vue';
+import { computed } from 'vue';
 import { useSearchStore } from '../stores/search.ts';
 import {
     IconPlus

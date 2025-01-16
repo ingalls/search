@@ -3,20 +3,20 @@
         <div class='container-xl'>
             <div class='row row-deck row-cards'>
                 <div class='col-lg-12 d-flex align-items-center justify-content-center'>
-                    <IconMapSearch :size='32' stroke='1'/><span class='mx-2'>Search Probability of Success</span>
+                    <IconMapSearch
+                        :size='32'
+                        stroke='1'
+                    /><span class='mx-2'>Search Probability of Success</span>
                 </div>
                 <div class='col-lg-12'>
                     <div class='card'>
-                        <div class='row g-0' >
+                        <div class='row g-0'>
                             <div class='col-12 col-md-3 border-end'>
                                 <div class='card-body'>
                                     <div class='col-12 d-flex align-items-center'>
                                         <h4 class='subheader user-select-none'>
                                             Search PoS
                                         </h4>
-
-                                        <div class='btn-list ms-auto'>
-                                        </div>
                                     </div>
                                     <div
                                         role='menu'
@@ -76,8 +76,15 @@
                             </div>
                             <div class='col-12 col-md-9 position-relative'>
                                 <template v-if='route.name === "home"'>
-                                    <div class='card-header'>
-                                        Search Setup
+                                    <div class='card-header d-flex align-items-center'>
+                                        <div class='card-title'>Search Setup</div>
+                                        <div class='ms-auto btn-list'>
+                                            <TablerDelete
+                                                title='Delete Search'
+                                                displaytype='icon'
+                                                @delete='deleteSearch'
+                                            />
+                                        </div>
                                     </div>
                                     <div class='row g-2 mx-2 mb-2'>
                                         <div class='col-md-8'>
@@ -114,12 +121,12 @@
                                                 <label
                                                     for='plane-type'
                                                     type='button'
-                                                    @click='search.type = "aircraft"'
                                                     style='width: 50%;'
                                                     :class='{
                                                         "btn-primary": search.type === "aircraft"
                                                     }'
                                                     class='btn btn-sm'
+                                                    @click='search.type = "aircraft"'
                                                 ><IconPlane
                                                     v-tooltip='"Aircraft Search"'
                                                     :size='32'
@@ -130,11 +137,11 @@
                                                     for='ground-type'
                                                     type='button'
                                                     style='width: 50%;'
-                                                    @click='search.type = "ground"'
                                                     :class='{
                                                         "btn-primary": search.type === "ground"
                                                     }'
                                                     class='btn btn-sm'
+                                                    @click='search.type = "ground"'
                                                 ><IconWalk
                                                     v-tooltip='"Ground Search"'
                                                     :size='32'
@@ -150,7 +157,9 @@
                                                 :disabled='!isValid'
                                                 class='btn btn-primary'
                                                 @click='clickNext'
-                                            >Next</button>
+                                            >
+                                                Next
+                                            </button>
                                         </div>
                                     </div>
                                 </template>
@@ -179,7 +188,8 @@ import {
     IconMap,
 } from '@tabler/icons-vue'
 import {
-    TablerInput
+    TablerInput,
+    TablerDelete
 } from '@tak-ps/vue-tabler'
 
 const isValid = computed(() => {
@@ -193,6 +203,11 @@ const isValid = computed(() => {
 const route = useRoute();
 const router = useRouter();
 const search = useSearchStore();
+
+function deleteSearch() {
+    delete localStorage.mission;
+    search.$reset();
+}
 
 function clickNext() {
     search.aircraft.enabled["regions"] = true;

@@ -9,61 +9,68 @@
         />
 
         <div class='modal-header'>
-            <div class='modal-title'>Sweep Width Calculator</div>
+            <div class='modal-title'>
+                Sweep Width Calculator
+            </div>
         </div>
         <div class='modal-body'>
             <div class='row g-2'>
                 <div class='col-md-12'>
                     <TablerEnum
-                        label='Search Object'
                         v-model='userSelection.object'
+                        label='Search Object'
                         :options='Object.keys(dataTable)'
                     />
                 </div>
                 <div class='col-md-12'>
                     <TablerEnum
-                        label='Vegetation/Terrain Correction'
                         v-model='userSelection.vegetation'
+                        label='Vegetation/Terrain Correction'
                         :options='corrections'
                     />
                 </div>
                 <div class='col-md-12'>
                     <TablerEnum
-                        label='Height AGL'
                         v-model='userSelection.height'
+                        label='Height AGL'
                         :options='heights'
                     />
                 </div>
                 <div class='col-md-12'>
                     <TablerEnum
-                        label='Visibility'
                         v-model='userSelection.visibility'
+                        label='Visibility'
                         :options='visibilities'
                     />
                 </div>
                 <div class='col-md-12'>
                     <label class='mx-2'>Computed Sweep Value</label>
-                    <pre v-text='calc'/>
+                    <pre v-text='calc' />
                 </div>
             </div>
         </div>
-            <div class='modal-footer'>
-                <button class='btn'
-                    @click='emit("close")'
-                >Cancel</button>
+        <div class='modal-footer'>
+            <button
+                class='btn'
+                @click='emit("close")'
+            >
+                Cancel
+            </button>
 
-                <div class='ms-auto'>
-                    <button
-                        @click='emit("select", calc)'
-                        class='btn btn-primary'
-                    >Select</button>
-                </div>
+            <div class='ms-auto'>
+                <button
+                    class='btn btn-primary'
+                    @click='emit("select", calc)'
+                >
+                    Select
+                </button>
             </div>
+        </div>
     </TablerModal>
 </template>
 
 <script setup lang='ts'>
-import { ref, computed, watch } from 'vue';
+import { ref, computed } from 'vue';
 import {
     TablerModal,
     TablerEnum
@@ -73,7 +80,7 @@ const emit = defineEmits(["close", 'select'])
 
 const calc = computed(() => {
     const cor = corrections.indexOf(userSelection.value.vegetation);
-    const hgt = heights.fn().indexOf(userSelection.value.height);
+    const hgt = heights.value.fn().indexOf(userSelection.value.height);
     const viz = visibilities.indexOf(userSelection.value.visibility);
 
     return dataTable[userSelection.value.object].widths[hgt][viz]
