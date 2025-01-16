@@ -61,7 +61,7 @@
                             <div class='col-md-4 d-flex'>
                                 <TablerInput
                                     label='Sweep Width'
-                                    description='TODO'
+                                    description='Effective search area from aircraft at a given height over given terrain'
                                     v-model='region.sweepWidth'
                                 />
                                 <TablerIconButton
@@ -77,7 +77,7 @@
                     </div>
                     <SweepCalculator
                         v-if='state.modal'
-                        @select='region.sweepWidth = $event'
+                        @select='updateSweep(region, $event)'
                         @close='state.modal = false'
                     />
                 </div>
@@ -140,6 +140,11 @@ function pushRegion() {
         searchLength: 0,
         sweepWidth: 0
     })
+}
+
+function updateSweep(region, sweep) {
+    region.sweepWidth = sweep;
+    state.value.modal = false;
 }
 
 function clickNext() {

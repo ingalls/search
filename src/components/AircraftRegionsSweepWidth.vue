@@ -5,7 +5,7 @@
             type='button'
             class='btn-close'
             aria-label='Close'
-            @click='$emit("close")'
+            @click='emit("close")'
         />
 
         <div class='modal-header'>
@@ -48,7 +48,10 @@
             </div>
         </div>
             <div class='modal-footer'>
-                <button class='btn' @click='emit("cancel")'>Cancel</button>
+                <button class='btn'
+                    @click='emit("close")'
+                >Cancel</button>
+
                 <div class='ms-auto'>
                     <button
                         @click='emit("select", calc)'
@@ -66,7 +69,7 @@ import {
     TablerEnum
 } from '@tak-ps/vue-tabler'
 
-const emit = defineEmits(["cancel", 'select'])
+const emit = defineEmits(["close", 'select'])
 
 const calc = computed(() => {
     const cor = corrections.indexOf(userSelection.value.vegetation);
