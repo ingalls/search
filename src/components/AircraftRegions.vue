@@ -58,24 +58,26 @@
                                     v-model='region.searchLength'
                                 />
                             </div>
-                            <div class='col-md-4'>
+                            <div class='col-md-4 d-flex'>
                                 <TablerInput
-                                    label='Sweep Width (nm)'
+                                    label='Sweep Width'
                                     description='TODO'
                                     v-model='region.sweepWidth'
+                                />
+                                <TablerIconButton
+                                    title='Sweep Width Calculator'
+                                    style='margin-top: 30px; margin-left: 8px;'
+                                    class='btn btn-sm'
+                                    @click='state.modal = true'
                                 >
-                                    <TablerIconButton
-                                        title='Sweep Width Calculator'
-                                        @click='state.modal = true'
-                                    >
-                                        <IconCalculator stroke='1'/>
-                                    </TablerIconButton>
-                                </TablerInput>
+                                    <IconCalculator stroke='1'/>
+                                </TablerIconButton>
                             </div>
                         </div>
                     </div>
                     <SweepCalculator
                         v-if='state.modal'
+                        @select='region.sweepWidth = $event'
                         @close='state.modal = false'
                     />
                 </div>

@@ -13,7 +13,7 @@
         "@sinclair/typebox": "^0.34.0",
         "@tabler/core": "^1.0.0-beta16",
         "@tabler/icons-vue": "^3.0.0",
-        "@tak-ps/vue-tabler": "^3.61.1",
+        "@tak-ps/vue-tabler": "^3.63.0",
         "floating-vue": "^5.2.2",
         "pinia": "^2.1.7",
         "sass-embedded": "^1.83.4",
